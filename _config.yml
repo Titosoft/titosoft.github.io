@@ -97,7 +97,7 @@ author:
   avatar           : "/assets/images/profile-pic.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "SysAdmin and Programmer"
   location         : "São Paulo, Brazil"
-  email            : "titogarrido@gmail.com"
+  email            : 
   uri              :
   home             : # null (default), "absolute or relative url to link to author home"
   bitbucket        :
