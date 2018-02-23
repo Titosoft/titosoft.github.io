@@ -91,7 +91,7 @@ analytics:
 # Site Author
 author:
   name             : "Tito Garrido"
-  avatar           : "/assets/images/profile-pic.png" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/images/profile-pic.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "SysAdmin and Programmer"
   location         : "São Paulo, Brazil"
   email            : "titogarrido@gmail.com"
