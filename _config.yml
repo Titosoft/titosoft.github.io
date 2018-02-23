@@ -9,7 +9,7 @@ minimal_mistakes_skin    : "contrast" #"default" "air", "aqua", "contrast", "dar
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Titosoft - Tito's Blog"
+title                    : "Titosoft"
 title_separator          : "-"
 name                     : "Tito Garrido"
 description              : "An website focused on How-to's. It talk about infrastructure and programming. Main subjects: Linux, Mainframe (z/VM), Virtualization, Python, IoT and Frameworks"
