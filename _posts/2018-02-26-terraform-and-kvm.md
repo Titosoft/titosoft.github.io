@@ -18,7 +18,7 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 ### APT pre-requisites
 
 ```
-# apt install unzip git
+# apt install unzip git libvirt-dev
 ```
 
 ## Installing Terraform
@@ -134,6 +134,12 @@ if [ -d "/usr/lib/go-1.9/bin" ] ; then
 fi
 ```
 
+Set your GOPATH, add the content above to your _.bashrc_:
+
+```
+export GOPATH=$HOME/go
+```
+
 Logon with your user again (I am using root) and test the installation:
 
 ```
@@ -141,11 +147,10 @@ root@ubuntu-host:~# go version
 go version go1.9.4 linux/amd64
 ```
 
-Set your GOPATH, add the content above to your _.bashrc_:
+### Building libvirt provider
 
-```
-export GOPATH=$HOME/go
-```
+
+
 
 
 ## Creating a KVM guest using Terraform
