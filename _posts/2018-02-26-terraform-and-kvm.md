@@ -17,7 +17,7 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 
 ### APT pre-requisites
 
-```
+```bash
 # apt install unzip git libvirt-dev
 ```
 
@@ -498,7 +498,7 @@ You can see that by creating our resource, we've also gathered a lot of informat
 
 Check your KVM host to see what happened:
 
-```
+```bash
 root@ubuntu-host:~/terraform# virsh list
  Id    Name                           State
 ----------------------------------------------------
@@ -514,7 +514,7 @@ root@ubuntu-host:~/terraform# virsh net-list
 
 Access your new server:
 
-```
+```bash
 ssh ubuntu@10.0.1.166
 ```
 
