@@ -291,3 +291,7 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 - _libvirt_volume_ that is a qcow2 disk that will be created inside our storage pool called "_images_" (**Note**: KVM creates a storage pool called "_default_" during the installation, this example uses "_images_" as a storage pool, change to your storage pool accordingly.)
 - _libvirt_network_ will create a NAT network called "_vm_network_" using network "10.0.1.0/24" for DHCP.
 - _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource.
+
+Create a new file called "libvirt.tf" and copy the content above.
+
+
