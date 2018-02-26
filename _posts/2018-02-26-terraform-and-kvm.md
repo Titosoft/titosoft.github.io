@@ -336,7 +336,7 @@ Terraform will perform the following actions:
       id:                               <computed>
       name:                             "commoninit.iso"
       pool:                             "images"
-      ssh_authorized_key:               "ssh-rsa AAAAB3NzaC1yc2EAAA[...]"
+      ssh_authorized_key:               "ssh-rsa AAAAB3NzaC1yc2[...]"
 
   + libvirt_domain.domain-ubuntu
       id:                               <computed>
@@ -360,19 +360,12 @@ Terraform will perform the following actions:
       machine:                          <computed>
       memory:                           "512"
       name:                             "ubuntu-terraform"
-      network_interface.#:              "2"
+      network_interface.#:              "1"
       network_interface.0.addresses.#:  <computed>
       network_interface.0.hostname:     "master"
       network_interface.0.mac:          <computed>
       network_interface.0.network_id:   <computed>
       network_interface.0.network_name: "vm_network"
-      network_interface.1.addresses.#:  "1"
-      network_interface.1.addresses.0:  "192.168.1.20"
-      network_interface.1.bridge:       "br0"
-      network_interface.1.hostname:     <computed>
-      network_interface.1.mac:          <computed>
-      network_interface.1.network_id:   <computed>
-      network_interface.1.network_name: <computed>
       vcpu:                             "1"
 
   + libvirt_network.vm_network
@@ -400,6 +393,10 @@ Do you want to perform these actions?
 
   Enter a value:
 ```
+
+This output shows the execution plan, describing which actions Terraform will take in order to change real infrastructure to match the configuration.
+
+Now confirm these actions typing "_yes_" and wait for your new server.
 
 ## Check your new infrastructure
 
