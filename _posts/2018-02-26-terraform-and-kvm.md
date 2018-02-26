@@ -197,7 +197,7 @@ drwxr-xr-x 3 root root 4.0K Feb 26 13:09 ..
 
 We should now be able to create a environment on KVM using Terraform, check the next session.
 
-## Creating a KVM guest using Terraform
+## Creating a Terraform configuration file for KVM
 
 With Terraform installed, let's dive right into it and start creating some infrastructure. Create a new directory called "terraform", we will use this directory to store the configuration file of our project.
 
