@@ -103,7 +103,7 @@ sudo add-apt-repository ppa:gophers/archive
 
 Update the repositories:
 
-```
+```bash
 apt-get update
 ```
 
@@ -120,7 +120,7 @@ apt-get install golang-1.9-go
 
 Add golang 1.9 to your PATH, create a file on _/etc/profile.d_: 
 
-```
+```bash
 vim /etc/profile.d/golang19.sh
 ```
 
@@ -136,13 +136,13 @@ fi
 
 Set your GOPATH, add the content above to your _.bashrc_:
 
-```
+```bash
 export GOPATH=$HOME/go
 ```
 
 Logon with your user again (I am using root) and test the installation:
 
-```
+```bash
 root@ubuntu-host:~# go version
 go version go1.9.4 linux/amd64
 ```
@@ -151,7 +151,7 @@ go version go1.9.4 linux/amd64
 
 Use "go get" to download the source from github:
 
-```
+```bash
 root@ubuntu-host:~# go get github.com/dmacvicar/terraform-provider-libvirt
 root@ubuntu-host:~# go install github.com/dmacvicar/terraform-provider-libvirt
 ```
@@ -164,7 +164,7 @@ There is a directory called "_terraform.d_" in your $HOME. In my example it is l
 
 If .terraform.d is not present execute a command and terraform will create it for you, example:
 
-```
+```bash
 root@ubuntu-host:~# terraform init
 Terraform initialized in an empty directory!
 
@@ -186,7 +186,7 @@ root@ubuntu-host:~/.terraform.d/plugins# pwd
 
 Copy our plugin binary to this new directory:
 
-```
+```bash
 root@ubuntu-host:~/.terraform.d/plugins# cp ~/go/bin/terraform-provider-libvirt .
 root@ubuntu-host:~/.terraform.d/plugins# ls -alh
 total 31M
@@ -211,7 +211,7 @@ We'll build infrastructure on KVM. Our configuration file will create a NAT netw
 
 The format of the configuration files is [documented here](https://www.terraform.io/docs/configuration/index.html). You can check the entire configuration file above:
 
-```
+```bash
 # instance the provider
 provider "libvirt" {
   uri = "qemu:///system"
@@ -294,7 +294,7 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 
 Create a new file called "libvirt.tf" and copy the content above.
 
-```
+```bash
 root@ubuntu-host:~/terraform# ls
 libvirt.tf
 ```
@@ -303,7 +303,7 @@ libvirt.tf
 
 The first command to run for a new configuration -- or after checking out an existing configuration from version control -- is _terraform init_, which initializes various local settings and data that will be used by subsequent commands.
 
-```
+```bash
 root@ubuntu-host:~/terraform# terraform init
 
 Initializing provider plugins...
@@ -323,7 +323,7 @@ commands will detect it and remind you to do so if necessary.
 
 In the same directory as the libvirt.tf file you created, run _terraform apply_. You should see output similar to below, though we've truncated some of the output to save space:
 
-```
+```bash
 root@ubuntu-host:~/terraform# terraform apply
 
 An execution plan has been generated and is shown below.
@@ -400,7 +400,7 @@ Now confirm these actions typing "_yes_" and wait for your new server.
 
 At the end you are going to see an output like this one:
 
-```
+```bash
 libvirt_domain.domain-ubuntu: Creation complete after 33s (ID: f6905a4e-993f-488e-a933-f74ce982f2a4)
 
 Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
@@ -414,7 +414,7 @@ ip = 10.0.1.166
 
 You can inspect the current state using terraform show:
 
-```
+```bash
 root@ubuntu-host:~/terraform# terraform show
 libvirt_cloudinit.commoninit:
   id = /var/lib/libvirt/images/commoninit.iso;5a9439b5-51c2-de45-f646-9a4c0dcd640f
