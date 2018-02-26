@@ -15,6 +15,12 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 - KVM installed and configured
 - Some disk space for your guests
 
+### APT pre-requisites
+
+```
+# apt install unzip
+```
+
 ## Installing Terraform
 
 First find the appropriate package for Linux on [Terraform Download page](https://www.terraform.io/downloads.html).
