@@ -398,6 +398,130 @@ This output shows the execution plan, describing which actions Terraform will ta
 
 Now confirm these actions typing "_yes_" and wait for your new server.
 
+At the end you are going to see an output like this one:
+
+```
+libvirt_domain.domain-ubuntu: Creation complete after 33s (ID: f6905a4e-993f-488e-a933-f74ce982f2a4)
+
+Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+ip = 10.0.1.166
+```
+
 ## Check your new infrastructure
 
+You can inspect the current state using terraform show:
 
+```
+root@ubuntu-host:~/terraform# terraform show
+libvirt_cloudinit.commoninit:
+  id = /var/lib/libvirt/images/commoninit.iso;5a9439b5-51c2-de45-f646-9a4c0dcd640f
+  local_hostname =
+  name = commoninit.iso
+  pool = images
+  ssh_authorized_key = ssh-rsa AAAAB3NzaC1[...]
+  user_data = #cloud-config
+ssh_authorized_keys:
+- ssh-rsa AAAAB3NzaC1[...]
+
+libvirt_domain.domain-ubuntu:
+  id = f6905a4e-993f-488e-a933-f74ce982f2a4
+  arch = x86_64
+  autostart = false
+  cloudinit = /var/lib/libvirt/images/commoninit.iso;5a9439b5-51c2-de45-f646-9a4c0dcd640f
+  cmdline.# = 0
+  console.# = 2
+  console.0.source_path =
+  console.0.target_port = 0
+  console.0.target_type = serial
+  console.0.type = pty
+  console.1.source_path =
+  console.1.target_port = 1
+  console.1.target_type = virtio
+  console.1.type = pty
+  disk.# = 1
+  disk.0.file =
+  disk.0.scsi = false
+  disk.0.url =
+  disk.0.volume_id = /var/lib/libvirt/images/ubuntu-qcow2
+  disk.0.wwn =
+  emulator = /usr/bin/kvm-spice
+  firmware =
+  graphics.# = 1
+  graphics.0.autoport = true
+  graphics.0.listen_type = address
+  graphics.0.type = spice
+  initrd =
+  kernel =
+  machine = ubuntu
+  memory = 512
+  name = ubuntu-terraform
+  network_interface.# = 1
+  network_interface.0.addresses.# = 1
+  network_interface.0.addresses.0 = 10.0.1.166
+  network_interface.0.bridge =
+  network_interface.0.hostname =
+  network_interface.0.mac = DE:E8:A7:F1:D0:77
+  network_interface.0.macvtap =
+  network_interface.0.network_id = 6ec048ad-3e33-4080-bf19-f109fe1c5f27
+  network_interface.0.network_name = vm_network
+  network_interface.0.passthrough =
+  network_interface.0.vepa =
+  network_interface.0.wait_for_lease = false
+  nvram.# = 0
+  vcpu = 1
+libvirt_network.vm_network:
+  id = 6ec048ad-3e33-4080-bf19-f109fe1c5f27
+  addresses.# = 1
+  addresses.0 = 10.0.1.0/24
+  autostart = false
+  bridge = virbr1
+  mode = nat
+  name = vm_network
+libvirt_volume.ubuntu-qcow2:
+  id = /var/lib/libvirt/images/ubuntu-qcow2
+  format = qcow2
+  name = ubuntu-qcow2
+  pool = images
+  size = 2361393152
+  source = https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+
+
+Outputs:
+
+ip = 10.0.1.166
+```
+
+You can see that by creating our resource, we've also gathered a lot of information about it. As you can see my server got the NAT IP 10.0.1.166.
+
+Access your new server:
+
+```
+ssh ubuntu@10.0.1.166
+```
+
+It shouldn't as a password since we have setup ssh authorized keys.
+
+Check your KVM to see what happened:
+
+```
+root@ubuntu-host:~/terraform# virsh list
+ Id    Name                           State
+----------------------------------------------------
+ 13    ubuntu-terraform               running
+
+root@ubuntu-host:~/terraform# virsh net-list
+ Name                 State      Autostart     Persistent
+----------------------------------------------------------
+ br0                  active     yes           yes
+ default              active     yes           yes
+ vm_network           active     no            yes
+ ```
+ 
+ And that is it! Enjoy your new server, play with Terraform configuration file and try to increase the number of guests, networks and disks!
+ 
+ On a next article I will try to build a Kubernetes environment on KVM using Terraform!
+ 
+ See ya!
