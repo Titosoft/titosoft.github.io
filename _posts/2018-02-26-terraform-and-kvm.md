@@ -290,8 +290,117 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 
 - _libvirt_volume_ that is a qcow2 disk that will be created inside our storage pool called "_images_" (**Note**: KVM creates a storage pool called "_default_" during the installation, this example uses "_images_" as a storage pool, change to your storage pool accordingly.)
 - _libvirt_network_ will create a NAT network called "_vm_network_" using network "10.0.1.0/24" for DHCP.
-- _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource.
+- _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource. (**Note**: Change "_ssh_authorized_key_" field for your public key.)
 
 Create a new file called "libvirt.tf" and copy the content above.
+
+```
+root@ubuntu-host:~/terraform# ls
+libvirt.tf
+```
+
+## Initialization
+
+The first command to run for a new configuration -- or after checking out an existing configuration from version control -- is _terraform init_, which initializes various local settings and data that will be used by subsequent commands.
+
+```
+root@ubuntu-host:~/terraform# terraform init
+
+Initializing provider plugins...
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+```
+
+## Apply Changes
+
+In the same directory as the libvirt.tf file you created, run _terraform apply_. You should see output similar to below, though we've truncated some of the output to save space:
+
+```
+root@ubuntu-host:~/terraform# terraform apply
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  + libvirt_cloudinit.commoninit
+      id:                               <computed>
+      name:                             "commoninit.iso"
+      pool:                             "images"
+      ssh_authorized_key:               "ssh-rsa AAAAB3NzaC1yc2EAAA[...]"
+
+  + libvirt_domain.domain-ubuntu
+      id:                               <computed>
+      arch:                             <computed>
+      cloudinit:                        "${libvirt_cloudinit.commoninit.id}"
+      console.#:                        "2"
+      console.0.target_port:            "0"
+      console.0.target_type:            "serial"
+      console.0.type:                   "pty"
+      console.1.target_port:            "1"
+      console.1.target_type:            "virtio"
+      console.1.type:                   "pty"
+      disk.#:                           "1"
+      disk.0.scsi:                      "false"
+      disk.0.volume_id:                 "${libvirt_volume.ubuntu-qcow2.id}"
+      emulator:                         <computed>
+      graphics.#:                       "1"
+      graphics.0.autoport:              "true"
+      graphics.0.listen_type:           "address"
+      graphics.0.type:                  "spice"
+      machine:                          <computed>
+      memory:                           "512"
+      name:                             "ubuntu-terraform"
+      network_interface.#:              "2"
+      network_interface.0.addresses.#:  <computed>
+      network_interface.0.hostname:     "master"
+      network_interface.0.mac:          <computed>
+      network_interface.0.network_id:   <computed>
+      network_interface.0.network_name: "vm_network"
+      network_interface.1.addresses.#:  "1"
+      network_interface.1.addresses.0:  "192.168.1.20"
+      network_interface.1.bridge:       "br0"
+      network_interface.1.hostname:     <computed>
+      network_interface.1.mac:          <computed>
+      network_interface.1.network_id:   <computed>
+      network_interface.1.network_name: <computed>
+      vcpu:                             "1"
+
+  + libvirt_network.vm_network
+      id:                               <computed>
+      addresses.#:                      "1"
+      addresses.0:                      "10.0.1.0/24"
+      bridge:                           <computed>
+      mode:                             "nat"
+      name:                             "vm_network"
+
+  + libvirt_volume.ubuntu-qcow2
+      id:                               <computed>
+      format:                           "qcow2"
+      name:                             "ubuntu-qcow2"
+      pool:                             "images"
+      size:                             <computed>
+      source:                           "https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img"
+
+
+Plan: 4 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value:
+```
+
+## Check your new infrastructure
 
 
