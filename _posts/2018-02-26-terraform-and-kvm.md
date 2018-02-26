@@ -199,7 +199,13 @@ We should now be able to create a environment on KVM using Terraform, check the 
 
 ## Creating a KVM guest using Terraform
 
-With Terraform installed, let's dive right into it and start creating some infrastructure.
+With Terraform installed, let's dive right into it and start creating some infrastructure. Create a new directory called "terraform", we will use this directory to store the configuration file of our project.
+
+```bash
+root@ubuntu-host:~/terraform# mkdir terraform
+root@ubuntu-host:~/terraform# pwd
+/root/terraform
+```
 
 We'll build infrastructure on KVM. Our configuration file will create a NAT network, a new volume and install Ubuntu 16.04 using a cloud image from Canonical servers.
 
