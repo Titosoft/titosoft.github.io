@@ -43,6 +43,9 @@ Archive:  terraform_0.11.3_linux_amd64.zip
 root@ubuntu-host:~# chmod +x terraform
 root@ubuntu-host:~# mv terraform /usr/local/bin/
 ```
+
+Verifying the Installation 
+
 ```bash
 root@ubuntu-host:~# terraform
 Usage: terraform [--version] [--help] <command> [args]
