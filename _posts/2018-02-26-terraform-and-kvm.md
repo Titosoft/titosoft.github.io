@@ -234,7 +234,7 @@ resource "libvirt_network" "vm_network" {
 # Use CloudInit to add our ssh-key to the instance
 resource "libvirt_cloudinit" "commoninit" {
           name           = "commoninit.iso"
-  pool = "images" #CHANGEME
+          pool = "images" #CHANGEME
           ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQA[...]" #CHANGE_ME
         }
 
