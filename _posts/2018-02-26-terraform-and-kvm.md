@@ -118,7 +118,7 @@ apt autoremove
 apt-get install golang-1.9-go
 ```
 
-Add golang 1.9 to your PATH, create a file on /etc/profile.d: 
+Add golang 1.9 to your PATH, create a file on _/etc/profile.d_: 
 
 ```
 vim /etc/profile.d/golang19.sh
@@ -134,10 +134,18 @@ if [ -d "/usr/lib/go-1.9/bin" ] ; then
 fi
 ```
 
+Logon with your user again (I am using root) and test the installation:
 
-Set your GOPATH:
+```
+root@ubuntu-host:~# go version
+go version go1.9.4 linux/amd64
+```
 
+Set your GOPATH, add the content above to your _.bashrc_:
 
+```
+export GOPATH=$HOME/go
+```
 
 
 ## Creating a KVM guest using Terraform
