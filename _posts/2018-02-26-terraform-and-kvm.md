@@ -518,7 +518,7 @@ Access your new server:
 ssh ubuntu@10.0.1.166
 ```
 
-It shouldn't as a password since we have setup ssh authorized keys.
+It shouldn't ask a password since we have setup ssh authorized keys.
  
  And that is it! Enjoy your new server, play with Terraform configuration file and try to increase the number of guests, networks and disks!
  
