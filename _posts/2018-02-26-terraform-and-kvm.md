@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: Terraform and KVM (x86)
 category: KVM
 tags: kvm terraform automation
