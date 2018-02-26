@@ -496,15 +496,7 @@ ip = 10.0.1.166
 
 You can see that by creating our resource, we've also gathered a lot of information about it. As you can see my server got the NAT IP 10.0.1.166.
 
-Access your new server:
-
-```
-ssh ubuntu@10.0.1.166
-```
-
-It shouldn't as a password since we have setup ssh authorized keys.
-
-Check your KVM to see what happened:
+Check your KVM host to see what happened:
 
 ```
 root@ubuntu-host:~/terraform# virsh list
@@ -519,6 +511,14 @@ root@ubuntu-host:~/terraform# virsh net-list
  default              active     yes           yes
  vm_network           active     no            yes
  ```
+
+Access your new server:
+
+```
+ssh ubuntu@10.0.1.166
+```
+
+It shouldn't as a password since we have setup ssh authorized keys.
  
  And that is it! Enjoy your new server, play with Terraform configuration file and try to increase the number of guests, networks and disks!
  
