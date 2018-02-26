@@ -149,8 +149,52 @@ go version go1.9.4 linux/amd64
 
 ### Building libvirt provider
 
+Use "go get" to download the source from github:
 
+```
+root@ubuntu-host:~# go get github.com/dmacvicar/terraform-provider-libvirt
+root@ubuntu-host:~# go install github.com/dmacvicar/terraform-provider-libvirt
+```
 
+You will now find the binary at $GOPATH/bin/terraform-provider-libvirt
 
+## Moving the libvirt provider to terraform.d
+
+There is a directory called "_terraform.d_" in your $HOME. In my example it is located in _/root/.terraform.d_
+
+If .terraform.d is not present execute a command and terraform will create it for you, example:
+
+```
+root@ubuntu-host:~# terraform init
+Terraform initialized in an empty directory!
+
+The directory has no Terraform configuration files. You may begin working
+with Terraform immediately by creating Terraform configuration files.
+root@ubuntu-host:~# cd .terraform.d/
+root@ubuntu-host:~/.terraform.d# ls
+checkpoint_signature
+```
+
+We are going to create a folder called "_plugins_" there:
+
+```bash
+root@ubuntu-host:~/.terraform.d# mkdir plugins
+root@ubuntu-host:~/.terraform.d# cd plugins/
+root@ubuntu-host:~/.terraform.d/plugins# pwd
+/root/.terraform.d/plugins
+```
+
+Copy our plugin binary to this new directory:
+
+```
+root@ubuntu-host:~/.terraform.d/plugins# cp ~/go/bin/terraform-provider-libvirt .
+root@ubuntu-host:~/.terraform.d/plugins# ls -alh
+total 31M
+drwxr-xr-x 2 root root 4.0K Feb 26 13:09 .
+drwxr-xr-x 3 root root 4.0K Feb 26 13:09 ..
+-rwxr-xr-x 1 root root  31M Feb 26 13:09 terraform-provider-libvirt
+```
+
+We should now be able to create a environment on KVM using Terraform, check the next session.
 
 ## Creating a KVM guest using Terraform
