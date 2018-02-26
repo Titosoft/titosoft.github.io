@@ -120,7 +120,19 @@ apt-get install golang-1.9-go
 
 Add golang 1.9 to your PATH, create a file on /etc/profile.d: 
 
+```
+vim /etc/profile.d/golang19.sh
+```
 
+Copy this content:
+
+```bash
+#!/bin/bash
+
+if [ -d "/usr/lib/go-1.9/bin" ] ; then
+   export PATH="$PATH:/usr/lib/go-1.9/bin"
+fi
+```
 
 
 Set your GOPATH:
