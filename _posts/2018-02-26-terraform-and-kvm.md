@@ -31,7 +31,9 @@ I am using [https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_lin
 wget https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip
 
 ```
+
 Unzip it, it is just a binary that we will move to _/usr/local/bin_ :
+
 ```bash
 root@ubuntu-host:~# unzip terraform_0.11.3_linux_amd64.zip
 Archive:  terraform_0.11.3_linux_amd64.zip
