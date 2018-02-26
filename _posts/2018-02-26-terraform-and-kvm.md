@@ -158,7 +158,7 @@ root@ubuntu-host:~# go install github.com/dmacvicar/terraform-provider-libvirt
 
 You will now find the binary at $GOPATH/bin/terraform-provider-libvirt
 
-## Moving the libvirt provider to terraform.d
+### Moving the libvirt provider to terraform.d
 
 There is a directory called "_terraform.d_" in your $HOME. In my example it is located in _/root/.terraform.d_
 
