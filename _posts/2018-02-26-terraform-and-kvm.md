@@ -25,7 +25,7 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 
 First find the appropriate package for Linux on [Terraform Download page](https://www.terraform.io/downloads.html).
 
-I am using [https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip](https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip) this version that is the latest available for me.
+I am using [https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip](https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip) that is the latest version available for me.
 
 ```bash
 wget https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip
