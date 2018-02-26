@@ -18,7 +18,7 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 ### APT pre-requisites
 
 ```
-# apt install unzip
+# apt install unzip git
 ```
 
 ## Installing Terraform
@@ -84,6 +84,48 @@ All other commands:
     state              Advanced state management
 ```
 
+Next step, install libvirt provider!
+
 ## Installing Terraform libvirt Provider
+
+The libvirt provide will require:
+- libvirt 1.2.14 or newer
+- latest golang version
+- mkisofs is required to use the CloudInit feature.
+
+### Installing golang 1.9
+
+To get the latest version of golang we are going to use a ppa:
+
+```bash
+sudo add-apt-repository ppa:gophers/archive
+```
+
+Update the repositories:
+
+```
+apt-get update
+```
+
+Remove an old version of golang:
+
+```bash
+apt remove golang
+apt autoremove
+```
+
+```bash
+apt-get install golang-1.9-go
+```
+
+Add golang 1.9 to your PATH, create a file on /etc/profile.d: 
+
+
+
+
+Set your GOPATH:
+
+
+
 
 ## Creating a KVM guest using Terraform
