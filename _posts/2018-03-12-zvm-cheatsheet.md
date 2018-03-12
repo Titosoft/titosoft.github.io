@@ -3,6 +3,7 @@ published: true
 category: z/VM
 tags: zvm cheatsheet
 toc: false
+title: z/VM Cheat Sheet
 ---
 Looking for a z/VM cheat sheet? I have created one some time ago during my workshops for IBM. You can check it out here:
 
