@@ -1,7 +1,7 @@
 ---
 published: true
 tags: news
-category: news
+category: News
 ---
 Welcome to my blog. My name is Tito Garrido Ogando and this is my first attempt to create a blog about interesting stuff that I have been studying.
 
