@@ -1,0 +1,8 @@
+---
+published: false
+---
+Looking for a z/VM cheat sheet? I have created one some time ago during my workshops for IBM. You can check it out here:
+
+[https://www.cheatography.com/titog/cheat-sheets/z-vm-cheat-sheet/](https://www.cheatography.com/titog/cheat-sheets/z-vm-cheat-sheet/ "z/VM Cheat Sheet")
+
+If you have any suggestions it can be improved, please leave a comment :)
