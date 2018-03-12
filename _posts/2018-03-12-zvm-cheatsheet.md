@@ -1,7 +1,7 @@
 ---
 published: true
 category: z/VM
-tags: zvm cheatsheet
+tags: z/vm cheatsheet
 toc: false
 title: z/VM Cheat Sheet
 ---
