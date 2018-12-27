@@ -92,7 +92,7 @@ analytics:
 author:
   name             : "Tito Garrido"
   avatar           : "/assets/images/profile-pic.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Blockchain Consultant, SysAdmin and Programmer"
+  bio              : "Solutions Architect, Blockchain Consultant, SysAdmin and Programmer"
   location         : "São Paulo, Brazil"
   email            : 
   uri              :
@@ -112,7 +112,7 @@ author:
   linkedin         : "titogarrido" # "john-doe-12345678" (the last part of your profile url, e.g. https://www.linkedin.com/in/john-doe-12345678)
   pinterest        :
   soundcloud       :
-  stackoverflow    : # "123456/username" (the last part of your profile url, e.g. https://stackoverflow.com/users/123456/username)
+  stackoverflow    : "1873333/tito-garrido" # "123456/username" (the last part of your profile url, e.g. https://stackoverflow.com/users/123456/username)
   steam            : # "steamId" (the last part of your profile url, e.g. https://steamcommunity.com/id/steamId/)
   tumblr           :
   twitter          : "titogarrido"
