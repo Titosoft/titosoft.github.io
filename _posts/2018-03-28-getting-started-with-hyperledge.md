@@ -1,7 +1,7 @@
 ---
 published: false
 toc: true
-title: Getting started with hyperledge blockchain
+title: Getting started with hyperledger blockchain
 ---
 ## Prerequisites
 
@@ -11,4 +11,3 @@ golang
 git
 
 ## Getting Samples
-
