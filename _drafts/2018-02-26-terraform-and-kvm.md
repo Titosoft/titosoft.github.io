@@ -9,7 +9,12 @@ toc: true
 
 It supports a bunch of [providers](https://www.terraform.io/docs/providers/index.html) like AWS, Azure, Softlayer... but, as you can see, there is no official support for KVM. I don't want to create a AWS account just to try terraform, so in this article I am going to write step by step how to create a KVM virtual environment using [Terraform libvirt provider](https://github.com/dmacvicar/terraform-provider-libvirt).
 
-This article has been updated to support Terraform 0.11.14 and libvirt provider 0.5.1.
+---
+**Update:** 
+
+**05/21/2019** - This article has been updated to support Terraform 0.11.14 and libvirt provider 0.5.1.
+
+---
 
 ## Pre-requisites
 - x86 server
@@ -27,18 +32,18 @@ This article has been updated to support Terraform 0.11.14 and libvirt provider 
 
 First find the appropriate package for Linux on [Terraform Download page](https://www.terraform.io/downloads.html).
 
-I am using [https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip](https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip) that is the latest version available to me.
+I am using [https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip](https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip) that is the latest version available to me.
 
 ```bash
-wget https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip
 
 ```
 
 Unzip it, it is just a binary that we will move to _/usr/local/bin_ :
 
 ```bash
-root@ubuntu-host:~# unzip terraform_0.11.3_linux_amd64.zip
-Archive:  terraform_0.11.3_linux_amd64.zip
+root@ubuntu-host:~# unzip terraform_0.11.14_linux_amd64.zip
+Archive:  terraform_0.11.14_linux_amd64.zip
   inflating: terraform
 ```
 ```bash
@@ -49,8 +54,8 @@ root@ubuntu-host:~# mv terraform /usr/local/bin/
 Verifying the Installation 
 
 ```bash
-root@ubuntu-host:~# terraform
-Usage: terraform [--version] [--help] <command> [args]
+root@ubuntu-host:~$ terraform
+Usage: terraform [-version] [-help] <command> [args]
 
 The available commands for execution are listed below.
 The most common, useful commands are shown first, followed by
@@ -81,6 +86,7 @@ Common commands:
     workspace          Workspace management
 
 All other commands:
+    0.12checklist      Checks whether the configuration is ready for Terraform v0.12
     debug              Debug output management (experimental)
     force-unlock       Manually unlock the terraform state
     state              Advanced state management
@@ -90,7 +96,7 @@ Next step, install libvirt provider!
 
 ## Installing Terraform libvirt Provider
 
-The libvirt provide will require:
+If you want to build the latest version the libvirt provide will require:
 - libvirt 1.2.14 or newer
 - latest golang version
 - mkisofs is required to use the CloudInit feature.
