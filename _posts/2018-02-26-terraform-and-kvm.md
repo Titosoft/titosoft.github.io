@@ -314,7 +314,7 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 - _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource.
 - There are 2 templates files that we will need to create for _cloudinit_. They will define our user data and network interface information.
 
-For the _user data_ we will create a file called "cloud_init.cfg" and paste the content below:
+For the _user data_ we will create a file called `cloud_init.cfg` and paste the content below:
 
 ```bash
 #cloud-config
@@ -353,7 +353,7 @@ ubuntu@ubuntu-host:~/terraform/blogtest$ ls
 cloud_init.cfg  libvirt.tf
 ````
 
-Now we will create our last configuration file that will setup our network card, it will be called _network_config.cfg_. Paste the content below:
+Now we will create our last configuration file that will setup our network card, it will be called `network_config.cfg`. Paste the content below:
 
 ```bash
 version: 2
