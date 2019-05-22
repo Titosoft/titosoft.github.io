@@ -217,7 +217,8 @@ root@ubuntu-host:~/terraform# pwd
 
 We'll build infrastructure on KVM. Our configuration file will create a NAT network, a new volume and install Ubuntu 16.04 using a cloud image from Canonical servers.
 
-The format of the configuration files is [documented here](https://www.terraform.io/docs/configuration/index.html). You can check the entire configuration file above:
+Create a new file called "libvirt.tf" and copy the content below. The format of the configuration files is [documented here](https://www.terraform.io/docs/configuration/index.html).
+
 
 ```bash
 # instance the provider
@@ -312,13 +313,6 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 - _libvirt_network_ will create a NAT network called "_vm_network_" using network "10.0.1.0/24" for DHCP.
 - _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource.
 - There are 2 templates files that we will need to create for _cloudinit_. They will define our user data and network interface information.
-
-Create a new file called "libvirt.tf" and copy the content above.
-
-```bash
-root@ubuntu-host:~/terraform# ls
-libvirt.tf
-```
 
 For the _user data_ we will create a file called "cloud_init.cfg" and paste the content below:
 
