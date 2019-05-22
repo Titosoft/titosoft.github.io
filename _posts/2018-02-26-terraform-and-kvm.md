@@ -340,7 +340,7 @@ growpart:
   devices: ['/']
 ```
 
-(All available parameters for cloudinit can be [found here] https://cloudinit.readthedocs.io/en/latest/topics/modules.html)
+(All available parameters for cloudinit can be [found here] (https://cloudinit.readthedocs.io/en/latest/topics/modules.html))
 
 - The configuration above creates an user called _ubuntu_ that will have SUDO access without password, an authorized key for passwordless access (**Note**: change it to your id_rsa.pub), it will also allow password access and the default password is _linux_.
 
@@ -362,7 +362,7 @@ ethernets:
      dhcp4: true
 ```
 
-(All available parameters for cloudinit network file can be [found here] https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html#network-config-v2)
+(All available parameters for cloudinit network file can be [found here] (https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html#network-config-v2))
 
 - It is a simple file that will create a interface called _ens3_ and setup as DHCP client.
 
