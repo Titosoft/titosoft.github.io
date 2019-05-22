@@ -207,7 +207,7 @@ We should now be able to create a environment on KVM using Terraform, check the 
 
 ## Creating a Terraform configuration file for KVM
 
-With Terraform installed, let's dive right into it and start creating some infrastructure. Create a new directory called "terraform", we will use this directory to store the configuration file of our project.
+With Terraform installed, let's dive right into it and start creating some infrastructure. Create a new directory called "terraform", we will use this directory to store some configurations files of our project.
 
 ```bash
 root@ubuntu-host:~/terraform# mkdir terraform
@@ -237,14 +237,26 @@ resource "libvirt_volume" "ubuntu-qcow2" {
 resource "libvirt_network" "vm_network" {
    name = "vm_network"
    addresses = ["10.0.1.0/24"]
+   dhcp {
+	enabled = true
+   }
 }
 
 # Use CloudInit to add our ssh-key to the instance
-resource "libvirt_cloudinit" "commoninit" {
-          name           = "commoninit.iso"
+resource "libvirt_cloudinit_disk" "commoninit" {
+          name = "commoninit.iso"
           pool = "images" #CHANGEME
-          ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQA[...]" #CHANGE_ME
+          user_data = "${data.template_file.user_data.rendered}"
+          network_config = "${data.template_file.network_config.rendered}"
         }
+
+data "template_file" "user_data" {
+  template = "${file("${path.module}/cloud_init.cfg")}"
+}
+
+data "template_file" "network_config" {
+  template = "${file("${path.module}/network_config.cfg")}"
+}
 
 
 # Create the machine
@@ -253,10 +265,10 @@ resource "libvirt_domain" "domain-ubuntu" {
   memory = "512"
   vcpu = 1
 
-  cloudinit = "${libvirt_cloudinit.commoninit.id}"
+  cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
 
   network_interface {
-    hostname = "master"
+    network_id = "${libvirt_network.vm_network.id}"
     network_name = "vm_network"
   }
 
@@ -284,12 +296,6 @@ resource "libvirt_domain" "domain-ubuntu" {
     autoport = "true"
   }
 }
-
-# Print the Boxes IP
-# Note: you can use `virsh domifaddr <vm_name> <interface>` to get the ip later
-output "ip" {
-  value = "${libvirt_domain.domain-ubuntu.network_interface.0.addresses.0}"
-}
 ```
 
 The _provider_ block is used to configure the named provider, in our case "libvirt".
@@ -298,7 +304,8 @@ The _resource_ block defines a resource that exists within the infrastructure. W
 
 - _libvirt_volume_ that is a qcow2 disk that will be created inside our storage pool called "_images_" (**Note**: KVM creates a storage pool called "_default_" during the installation, this example uses "_images_" as a storage pool, change to your storage pool accordingly.)
 - _libvirt_network_ will create a NAT network called "_vm_network_" using network "10.0.1.0/24" for DHCP.
-- _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource. (**Note**: Change "_ssh_authorized_key_" field for your public key.)
+- _libvirt_domain_ defines our guest "ubuntu-terraform" with 512MB of RAM, 1 vcpu, with a network interface and our qcow disk created on "_libvirt_volume_" resource.
+- There are 2 templates files that we will need to create for _cloudinit_. They will define our user data and network interface information.
 
 Create a new file called "libvirt.tf" and copy the content above.
 
@@ -306,6 +313,62 @@ Create a new file called "libvirt.tf" and copy the content above.
 root@ubuntu-host:~/terraform# ls
 libvirt.tf
 ```
+
+For the _user data_ we will create a file called "cloud_init.cfg" and paste the content below:
+
+```bash
+#cloud-config
+users:
+  - name: ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    home: /home/ubuntu
+    shell: /bin/bash
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYnZmg #CHANGE_ME
+ssh_pwauth: True
+disable_root: false
+chpasswd:
+  list: |
+     ubuntu:linux
+  expire: False
+package_update: true
+packages:
+    - qemu-guest-agent
+growpart:
+  mode: auto
+  devices: ['/']
+```
+
+- The configuration above creates an user called _ubuntu_ that will have SUDO access without password, an authorized key for passwordless access (**Note**: change it to your id_rsa.pub), it will also allow password access and the default password is _linux_.
+
+- The _package_ section will install _qemu-guest-agent_ package to provide us some facilities managing our VM. 
+
+- The _growpart_ statement resizes partitions to fill the available disk space.
+
+```bash
+ubuntu@ubuntu-host:~/terraform/blogtest$ ls
+cloud_init.cfg  libvirt.tf
+````
+
+Now we will create our last configuration file that will setup our network card, it will be called _network_config.cfg_. Paste the content below:
+
+```bash
+version: 2
+ethernets:
+  ens3:
+     dhcp4: true
+```
+
+- It is a simple file that will create a interface called _ens3_ and setup as DHCP client.
+
+Now we have all the 3 files that we need in our _terraform_ folder:
+
+```bash
+ubuntu@ubuntu-host:~/terraform/blogtest$ ls
+cloud_init.cfg  libvirt.tf  network_config.cfg
+```
+
 
 ## Initialization
 
