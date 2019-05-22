@@ -12,7 +12,7 @@ It supports a bunch of [providers](https://www.terraform.io/docs/providers/index
 ---
 **Update:** 
 
-**05/21/2019** - This article has been updated to support Terraform 0.11.14 and libvirt provider 0.5.1.
+**05/22/2019** - This article has been updated to support Terraform 0.11.14 and libvirt provider 0.5.1.
 
 ---
 
