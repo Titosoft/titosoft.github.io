@@ -298,7 +298,13 @@ resource "libvirt_domain" "domain-ubuntu" {
 }
 ```
 
-The _provider_ block is used to configure the named provider, in our case "libvirt".
+The _provider_ block is used to configure the named provider, in our case "libvirt". If you want to connect to a remote KVM host you can change the uri to something like:
+```bash
+provider "libvirt" {
+  uri = "virsh -c qemu+ssh://ubuntu@yourhostname.com/system?socket=/var/run/libvirt/libvirt-sock"
+}
+```
+Make sure that the user _ubuntu_, for example, has the proper permission to execute _virsh_ commands.
 
 The _resource_ block defines a resource that exists within the infrastructure. We have defined:
 
@@ -340,6 +346,8 @@ growpart:
   devices: ['/']
 ```
 
+(All available parameters for cloudinit can be [found here] https://cloudinit.readthedocs.io/en/latest/topics/modules.html)
+
 - The configuration above creates an user called _ubuntu_ that will have SUDO access without password, an authorized key for passwordless access (**Note**: change it to your id_rsa.pub), it will also allow password access and the default password is _linux_.
 
 - The _package_ section will install _qemu-guest-agent_ package to provide us some facilities managing our VM. 
@@ -359,6 +367,8 @@ ethernets:
   ens3:
      dhcp4: true
 ```
+
+(All available parameters for cloudinit network file can be [found here] https://cloudinit.readthedocs.io/en/latest/topics/network-config-format-v2.html#network-config-v2)
 
 - It is a simple file that will create a interface called _ens3_ and setup as DHCP client.
 
