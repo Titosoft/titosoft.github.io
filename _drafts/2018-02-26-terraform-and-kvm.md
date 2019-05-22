@@ -264,12 +264,14 @@ resource "libvirt_domain" "domain-ubuntu" {
   name = "ubuntu-terraform"
   memory = "512"
   vcpu = 1
+  qemu_agent = true
 
   cloudinit = "${libvirt_cloudinit_disk.commoninit.id}"
 
   network_interface {
     network_id = "${libvirt_network.vm_network.id}"
     network_name = "vm_network"
+    wait_for_lease = true
   }
 
   # IMPORTANT
@@ -295,6 +297,12 @@ resource "libvirt_domain" "domain-ubuntu" {
     listen_type = "address"
     autoport = "true"
   }
+}
+
+# Print the Boxes IP
+# Note: you can use `virsh domifaddr <vm_name> <interface>` to get the ip later
+output "ip" {
+  value = "${libvirt_domain.domain-ubuntu.network_interface.0.addresses.0}"
 }
 ```
 
@@ -385,9 +393,19 @@ cloud_init.cfg  libvirt.tf  network_config.cfg
 The first command to run for a new configuration -- or after checking out an existing configuration from version control -- is _terraform init_, which initializes various local settings and data that will be used by subsequent commands.
 
 ```bash
-root@ubuntu-host:~/terraform# terraform init
+ubuntu@ubuntu-host:~/terraform$ terraform init
 
 Initializing provider plugins...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.template: version = "~> 2.1"
 
 Terraform has been successfully initialized!
 
@@ -406,6 +424,8 @@ In the same directory as the libvirt.tf file you created, run _terraform apply_.
 
 ```bash
 root@ubuntu-host:~/terraform# terraform apply
+data.template_file.network_config: Refreshing state...
+data.template_file.user_data: Refreshing state...
 
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
@@ -413,16 +433,17 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-  + libvirt_cloudinit.commoninit
+  + libvirt_cloudinit_disk.commoninit
       id:                               <computed>
       name:                             "commoninit.iso"
-      pool:                             "images"
-      ssh_authorized_key:               "ssh-rsa AAAAB3NzaC1yc2[...]"
+      network_config:                   "version: 2\nethernets:\n  ens3:\n     dhcp4: true\n"
+      pool:                             "default"
+      user_data:                        "#cloud-config\nusers:\n  - name: ubuntu\n    sudo: ALL=(ALL) NOPASSWD:ALL\n    groups: users, admin\n    home: /home/ubuntu\n    shell: /bin/bash\n    ssh-authorized-keys:\n      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYnZmgT[...] \nssh_pwauth: True\ndisable_root: false\nchpasswd:\n  list: |\n     ubuntu:linux\n  expire: False\npackage_update: true\npackages:\n    - qemu-guest-agent\ngrowpart:\n  mode: auto\n  devices: ['/']\n"
 
   + libvirt_domain.domain-ubuntu
       id:                               <computed>
       arch:                             <computed>
-      cloudinit:                        "${libvirt_cloudinit.commoninit.id}"
+      cloudinit:                        "${libvirt_cloudinit_disk.commoninit.id}"
       console.#:                        "2"
       console.0.target_port:            "0"
       console.0.target_type:            "serial"
@@ -443,10 +464,12 @@ Terraform will perform the following actions:
       name:                             "ubuntu-terraform"
       network_interface.#:              "1"
       network_interface.0.addresses.#:  <computed>
-      network_interface.0.hostname:     "master"
+      network_interface.0.hostname:     <computed>
       network_interface.0.mac:          <computed>
-      network_interface.0.network_id:   <computed>
+      network_interface.0.network_id:   "${libvirt_network.vm_network.id}"
       network_interface.0.network_name: "vm_network"
+      qemu_agent:                       "false"
+      running:                          "true"
       vcpu:                             "1"
 
   + libvirt_network.vm_network
@@ -454,6 +477,8 @@ Terraform will perform the following actions:
       addresses.#:                      "1"
       addresses.0:                      "10.0.1.0/24"
       bridge:                           <computed>
+      dhcp.#:                           "1"
+      dhcp.0.enabled:                   "true"
       mode:                             "nat"
       name:                             "vm_network"
 
@@ -461,7 +486,7 @@ Terraform will perform the following actions:
       id:                               <computed>
       format:                           "qcow2"
       name:                             "ubuntu-qcow2"
-      pool:                             "images"
+      pool:                             "default"
       size:                             <computed>
       source:                           "https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img"
 
@@ -488,7 +513,7 @@ Apply complete! Resources: 4 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-ip = 10.0.1.166
+ip = 10.0.1.187
 ```
 
 ## Check your new infrastructure
@@ -569,10 +594,10 @@ libvirt_volume.ubuntu-qcow2:
   size = 2361393152
   source = https://cloud-images.ubuntu.com/releases/xenial/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
 
-
 Outputs:
 
 ip = 10.0.1.166
+  
 ```
 
 You can see that by creating our resource, we've also gathered a lot of information about it. As you can see my server got the NAT IP 10.0.1.166.
