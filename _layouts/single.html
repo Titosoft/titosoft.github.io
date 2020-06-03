@@ -1,5 +1,6 @@
 ---
 layout: default
+published: true
 ---
 
 {% if page.header.overlay_color or page.header.overlay_image or page.header.image %}
@@ -43,6 +44,7 @@ layout: default
           </aside>
         {% endif %}
         {{ content }}
+        {% include ad-horizontal.html %}
         {% if page.link %}<div><a href="{{ page.link }}" class="btn btn--primary">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
