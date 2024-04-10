@@ -91,8 +91,8 @@ analytics:
 # Site Author
 author:
   name             : "Tito Garrido"
-  avatar           : "/assets/images/profile-pic.jpg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Solutions Architect, Blockchain Consultant, SysAdmin and Programmer"
+  avatar           : "/assets/images/profile-pic.jpeg" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  bio              : "Solutions Architect, SysAdmin and Programmer"
   location         : "São Paulo, Brazil"
   email            : 
   uri              :
